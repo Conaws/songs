@@ -1,536 +1,461 @@
 # Suno Prompt Specification
 
-A comprehensive guide for crafting maximally expressive prompts for Suno AI music generation.
+A complete reference for formatting instructions into maximally expressive Suno AI prompts.
 
 ---
 
-## Overview
+## Two-Field System
 
-Suno uses two input fields:
-1. **Style Prompt** — Describes the overall sound, genre, mood, and instrumentation
-2. **Lyrics Field** — Contains lyrics with embedded `[metatags]` for structure and vocal direction
+Suno uses two separate input fields. Understanding their distinct purposes is critical.
 
-This spec covers both fields and how to use them together effectively.
+| Field | Purpose | Contains |
+|-------|---------|----------|
+| **Style of Music** | Global blueprint for the song | Genre, mood, instruments, vocal style, high-level structure |
+| **Lyrics/Custom Lyrics** | Section-by-section control | `[Structure Tags]`, lyrics, inline vocal/energy cues |
+
+### Style of Music Field
+
+This is a **short creative brief**. It defines *what the song is*.
+
+**Include:**
+- Genre or genre fusion
+- Overall mood/emotional direction
+- Main instruments (2-4 max)
+- Vocal style (type, tone, delivery)
+- High-level structure cues (build, drop, cinematic chorus)
+
+**Exclude:**
+- Lyrics or verses
+- Song titles or artist names
+- Narrative storytelling
+- Vague filler ("cool," "fire," "radio hit")
+
+**Example:**
+```
+Uplifting gospel trap with 808s, female layered vocals, and a big cinematic chorus
+```
+
+### Lyrics Field
+
+This is where **structure tags** and **section-local cues** live.
+
+**Rule of Thumb:**
+- Writing lyrics → use `[Verse]`, `[Chorus]`, `[Bridge]` in the Lyrics field
+- No custom lyrics → describe structure in the Style of Music field
 
 ---
 
-## The Golden Rules
+## Placement Rules That Change Outcomes
 
-| Rule | Rationale |
-|------|-----------|
-| **4-7 descriptors** in style prompt | Too few = generic; too many = confused output |
-| **Front-load importance** | First 20-30 words have strongest influence |
-| **2-4 instruments max** | More causes muddiness and conflicts |
-| **Iterate 6+ times** | Rarely perfect on first generation |
-| **No artist names** | Copyright restrictions; use style descriptors instead |
-| **Era + Genre** | "80s synth-pop" beats "synth-pop" alone |
-
----
-
-## Style Prompt Structure
-
-### Formula
-```
-[Era] [Genre/Subgenre], [BPM], [Key Instruments], [Mood], [Texture/Production], [Vocal Style]
-```
-
-### Examples
-
-**Synthwave:**
-```
-1980s synthwave, 118 BPM, analog synth arpeggios, gated reverb drums,
-neon-soaked atmosphere, dreamy male falsetto, lush pads, punchy bass
-```
-
-**Indie Folk:**
-```
-2010s indie folk, 92 BPM, fingerpicked acoustic guitar, warm upright piano,
-intimate vulnerable female vocal, lo-fi tape warmth, wistful nostalgic
-```
-
-**Trap:**
-```
-Modern trap, 140 BPM half-time, heavy 808 sub bass, sparse hi-hats,
-dark atmospheric pads, aggressive male rap, autotuned ad-libs
-```
-
-**Orchestral Cinematic:**
-```
-Epic cinematic orchestral, sweeping strings, powerful brass swells,
-thundering timpani, triumphant heroic mood, building crescendo
-```
+| Rule | What To Do | Why It Helps |
+|------|------------|--------------|
+| **Top-load the palette** | Before first lyric: 1 mood + 1 energy + 1-2 instruments | Prevents "random first 10 seconds" |
+| **Localize the hard turn** | Place `[Energy: High]` immediately before chorus | Prevents verses from running hot |
+| **One job per tag** | Avoid conflicts like `[Mood: sad, happy, angry]` | Conflicts get averaged out |
+| **Fewer instruments = cleaner output** | Pick 2-3 anchor timbres | Less clutter, cleaner arrangement |
+| **Write for performance** | Keep lines tight and short | Improves intelligibility |
+| **Front-load importance** | Most important descriptors in first 20-30 words | Strongest influence on generation |
 
 ---
 
-## Metatag Reference
+## Core Structure Tags
 
-### Structure Tags
-Place these in the **lyrics field** to define song sections:
+### Primary Section Tags
+
+| Tag | Purpose | Common Fix When It Fails |
+|-----|---------|-------------------------|
+| `[Intro]` | Establish palette; keep short | If too loud, add calm mood cue before it |
+| `[Verse]` | Story lane; lower density than chorus | If repeating, write Verse 2 with angle shift |
+| `[Pre-Chorus]` | Build tension before chorus | If weak, shorten phrasing and add `[Build-Up]` |
+| `[Chorus]` | Hook lane; strongest energy | If doesn't lift, add `[Energy: High]` before it |
+| `[Bridge]` | Contrast lane; change harmony/rhythm/space | If feels like Verse 3, strip drums or half-time |
+| `[Outro]` | Resolve lane; plan the landing | If cuts hard, keep last line short, plan fade |
+| `[Hook]` | Short catchy phrase | Use for memorable one-liners |
+| `[Final Chorus]` | Biggest version of chorus | Add `[Energy: High]` for maximum lift |
+
+### Dynamic/Energy Tags
+
+Use only when you need a clear dynamic move:
 
 | Tag | Purpose |
 |-----|---------|
-| `[Intro]` | Opening instrumental or vocal |
-| `[Verse]` / `[Verse 1]` | Main narrative sections |
-| `[Pre-Chorus]` | Tension building before chorus |
-| `[Chorus]` | Hook, most memorable part |
-| `[Post-Chorus]` | Extension after chorus |
-| `[Bridge]` | Contrasting section, often before final chorus |
-| `[Hook]` | Short catchy phrase |
-| `[Break]` | Stripped-down moment |
-| `[Drop]` | EDM-style climax after buildup |
-| `[Buildup]` | Rising tension toward drop |
-| `[Interlude]` | Transitional instrumental |
+| `[Build]` / `[Build-Up]` | Gradual lift into chorus/drop |
+| `[Drop]` | Impact lane (beat-forward hook moment) |
+| `[Breakdown]` | Strip-back contrast (space + tension) |
+| `[Interlude]` | Transitional instrumental passage |
 | `[Solo]` | Instrumental spotlight |
-| `[Outro]` | Closing section |
 | `[Fade Out]` | Gradual ending |
 | `[End]` | Abrupt stop |
 
-### Voice Tags
+### Palette Tags (Place at Top)
 
-**Gender/Character:**
+```
+[Mood: Focused]
+[Energy: Medium]
+[Instrument: Keys, Drums]
+```
+
+---
+
+## Music Structure Tags
+
+These advanced tags guide harmonic, melodic, and arrangement behavior:
+
+### Tension & Release
+
+| Tag | Effect |
+|-----|--------|
+| `[Ascending progression]` | Chord sequence that rises to create forward momentum |
+| `[Descending melody]` | Melodic line stepping down for release/calm |
+| `[Build-up dynamics]` | Gradual increase in volume/density toward peak |
+| `[Falling tension]` | Release phase with simpler harmony, softer dynamics |
+| `[Gradual swell]` | Slow intensity increase that blooms into next section |
+| `[Musical tension]` | Harmonic/rhythmic pressure demanding resolution |
+| `[Unresolved tension]` | Deliberately unfinished feeling |
+
+### Transitions & Modulation
+
+| Tag | Effect |
+|-----|--------|
+| `[Bridge modulation]` | Key change in/because of bridge |
+| `[Chromatic transition]` | Move using notes outside key for sleek motion |
+| `[Diatonic pivot]` | Smooth shift using chord common to both keys |
+| `[Half-step change]` | Semitone modulation for dramatic lift |
+| `[Relative switch]` | Move between relative major/minor |
+| `[Sudden shift]` | Abrupt change in key/groove/texture |
+| `[Knockout transition]` | Hard-hitting change with force |
+
+### Emotional Direction
+
+| Tag | Effect |
+|-----|--------|
+| `[Emotional climax]` | Feeling peaks with strongest lyric + biggest lift |
+| `[Climactic theme]` | Central idea at maximum impact |
+| `[Heightened emotion]` | Deliberate escalation of intensity |
+| `[Introspective moment]` | Quieter, inward section |
+| `[Yearning climax]` | Peak driven by longing rather than triumph |
+| `[Uplifting message]` | Lyrical turn toward hope/resilience |
+| `[Wistful hopeful]` | Bittersweet mix of longing and optimism |
+
+### Harmonic Color
+
+| Tag | Effect |
+|-----|--------|
+| `[Brightening harmonies]` | More open/hopeful harmony choices |
+| `[Flattened tone]` | Bluesy, moody darker tint (♭3/♭6/♭7) |
+| `[Circle of fifths]` | Movement through keys by perfect fifths |
+| `[Harmonic surprise]` | Unexpected chord that still feels intentional |
+| `[Jazz turn]` | Extensions, altered dominants, ii-V gestures |
+| `[Neapolitan chord]` | bII major for bold dramatic color |
+
+### Arrangement & Texture
+
+| Tag | Effect |
+|-----|--------|
+| `[Atmospheric shift]` | Change in mood/space/sonic environment |
+| `[Quiet arrangement]` | Sparse production for intimacy |
+| `[Lush layers]` | Stacked harmonies/pads/counter-melodies |
+| `[Textural contrast]` | Change in sonic density or timbre |
+| `[Orchestral swell]` | Cinematic rise using strings/brass/pads |
+| `[Outward expansion]` | Section opens up the soundstage |
+| `[Zenith intensity]` | Highest energy point in track |
+
+### Narrative & Lyric Direction
+
+| Tag | Effect |
+|-----|--------|
+| `[Anticipatory lyrics]` | Lines that hint at what's coming |
+| `[Lyrical foreshadowing]` | Early details that later pay off |
+| `[Progressive storytelling]` | Each section advances the situation |
+| `[Rising lyrics]` | Lines escalating in intensity/urgency |
+| `[Guided imagery]` | Vivid sensory details like a camera moving |
+| `[Dramatic twist]` | Surprising turn that reframes the moment |
+
+---
+
+## Voice & Vocal Tags
+
+### Gender/Character
 ```
 [Male Vocal]    [Female Vocal]    [Duet]
 [Choir]         [Boy]             [Girl]
 [Man]           [Woman]           [Children]
 ```
 
-**Vocal Style:**
+### Vocal Tone
+```
+[Airy]          [Breathy]         [Crisp]
+[Deep]          [Gritty]          [Smooth]
+[Raspy]         [Silky]           [Warm]
+```
+
+### Vocal Style
 ```
 [Whisper]       [Spoken Word]     [Rap]
 [Harmonies]     [Falsetto]        [Belting]
 [Growl]         [Crooning]        [Operatic]
 [Scat]          [Humming]         [Chanting]
-[Yelling]       [Screaming]       [Call and Response]
 ```
 
-**Vocal Texture:**
+### Vocal Effects
 ```
-[Breathy]       [Airy]            [Crisp]
-[Deep]          [Gritty]          [Smooth]
-[Raspy]         [Silky]           [Nasally]
-```
-
-**Vocal Effects:**
-```
-[Reverb]        [Delay]           [AutoTune]
-[No AutoTune]   [Distorted Vocals] [Filtered Vocals]
-[Vocoder]       [Telephone Effect] [Radio Effect]
+[Auto-tuned]    [Distorted]       [Reverbed]
+[Vocoder]       [Telephone Effect] [Filtered]
 ```
 
-**Vocal Emotion:**
+### Vocal Emotion
 ```
 [Vulnerable]    [Powerful]        [Soft]
 [Aggressive]    [Melancholic]     [Joyful]
 [Sultry]        [Defiant]         [Tender]
-[Desperate]     [Triumphant]      [Haunting]
+[Desperate]     [Triumphant]      [Intimate]
 ```
 
-### Instrument Tags
+### Pitch & Range
+```
+[Low-pitched]   [High-pitched]    [Mid-range]
+[Vocal expansion]  [Falsetto]     [Belting]
+```
+
+---
+
+## Instrument Tags
+
+### Limit to 2-4 per generation
 
 **Keyboards:**
 ```
-[Piano]             [Electric Piano]      [Rhodes]
-[Synth]             [Analog Synth]        [Moog Synth]
-[Organ]             [Synth Pad]           [Wurlitzer]
-[Harpsichord]       [Celesta]
+Piano, Electric Piano, Rhodes, Wurlitzer
+Synth, Analog Synth, Moog Synth, Synth Pad
+Organ, Harpsichord, Celesta
 ```
 
 **Strings:**
 ```
-[Acoustic Guitar]   [Electric Guitar]     [Distorted Guitar]
-[Clean Guitar]      [12-String Guitar]    [Nylon Guitar]
-[Bass Guitar]       [Slap Bass]           [Fretless Bass]
-[Violin]            [Viola]               [Cello]
-[Double Bass]       [Harp]                [Ukulele]
-[Banjo]             [Mandolin]
+Acoustic Guitar, Electric Guitar, Distorted Guitar
+Nylon Guitar, 12-String Guitar, Bass Guitar
+Violin, Cello, Harp, Ukulele, Banjo
 ```
 
 **Drums/Percussion:**
 ```
-[Drums]             [808s]                [Drum Machine]
-[TR-909]            [TR-808]              [Breakbeat]
-[Live Drums]        [Brushed Drums]       [Electronic Drums]
-[Congas]            [Bongos]              [Tambourine]
-[Handclaps]         [Shaker]              [Timpani]
+Drums, 808s, TR-909, Drum Machine
+Live Drums, Brushed Drums, Breakbeat
+Congas, Tambourine, Handclaps, Timpani
 ```
 
 **Wind/Brass:**
 ```
-[Saxophone]         [Alto Sax]            [Tenor Sax]
-[Trumpet]           [Muted Trumpet]       [Trombone]
-[Flute]             [Pan Flute]           [Clarinet]
-[Harmonica]         [Accordion]           [Oboe]
-[French Horn]       [Tuba]
+Saxophone, Trumpet, Trombone, Flute
+Harmonica, Accordion, French Horn
 ```
 
 **Electronic:**
 ```
-[Synth Bass]        [Acid Bass]           [Wobbly Bass]
-[Lead Synth]        [Arpeggiator]         [Glitch]
-[Bitcrushed]        [Granular]            [Sidechain]
-```
-
-### Mood/Energy Tags
-
-**Mood:**
-```
-[Uplifting]     [Melancholic]   [Haunting]      [Dark]
-[Joyful]        [Nostalgic]     [Romantic]      [Intense]
-[Dreamy]        [Peaceful]      [Euphoric]      [Epic]
-[Intimate]      [Bittersweet]   [Triumphant]    [Ominous]
-[Whimsical]     [Mysterious]    [Aggressive]    [Hopeful]
-```
-
-**Energy:**
-```
-[High Energy]   [Medium Energy]  [Low Energy]    [Chill]
-[Driving]       [Explosive]      [Building]      [Steady]
-[Frantic]       [Hypnotic]       [Pulsing]       [Relaxed]
-```
-
-**Texture/Production:**
-```
-[Lo-fi]         [Hi-fi]         [Gritty]        [Clean]
-[Raw]           [Lush]          [Sparse]        [Dense]
-[Tape-Saturated] [Vinyl Hiss]   [Atmospheric]   [Punchy]
-[Warm]          [Bright]        [Polished]      [Muddy]
-[Distorted]     [Compressed]    [Reverb-Drenched]
-```
-
-### Genre Tags (Curated Selection)
-
-**Electronic/Dance:**
-```
-EDM, House, Deep House, Tech House, Techno, Trance,
-Dubstep, Drum and Bass, Jungle, Synthwave, Retrowave,
-Chillwave, Future Bass, Trap, Industrial, EBM,
-Ambient, Downtempo, Trip-Hop, Breakbeat, UK Garage
-```
-
-**Hip-Hop/R&B:**
-```
-Hip Hop, Rap, Boom Bap, Lo-fi Hip Hop, Trap Rap,
-Old School Hip Hop, Conscious Rap, Gangsta Rap,
-R&B, Neo-Soul, Soul, Funk, Contemporary R&B
-```
-
-**Rock/Metal:**
-```
-Rock, Indie Rock, Alt Rock, Pop Rock, Hard Rock,
-Punk Rock, Post-Punk, Grunge, Metal, Heavy Metal,
-Thrash Metal, Death Metal, Progressive Rock,
-Psychedelic Rock, Shoegaze, Post-Rock, Emo
-```
-
-**Pop:**
-```
-Pop, Synth Pop, Electropop, Indie Pop, Dream Pop,
-Bedroom Pop, Dance Pop, Art Pop, Chamber Pop,
-Bubblegum Pop, Teen Pop, K-Pop, J-Pop
-```
-
-**Folk/Country/Acoustic:**
-```
-Folk, Indie Folk, Folk Rock, Americana, Country,
-Bluegrass, Singer-Songwriter, Acoustic, Celtic
-```
-
-**Jazz/Blues:**
-```
-Jazz, Smooth Jazz, Bebop, Cool Jazz, Fusion,
-Bossa Nova, Blues, Delta Blues, Chicago Blues,
-Soul Jazz, Swing, Big Band
-```
-
-**World:**
-```
-Latin, Salsa, Reggaeton, Reggae, Dancehall,
-Afrobeat, Afropop, Flamenco, Bossa Nova,
-World Music, Arabic, Indian Classical
-```
-
-**Classical/Orchestral:**
-```
-Classical, Orchestral, Chamber Music, Baroque,
-Romantic Era, Neoclassical, Cinematic, Film Score,
-Epic Orchestral, Opera, Choral, Minimalist
-```
-
-### Sound Effect Tags
-
-**Environmental:**
-```
-[Birds Chirping]    [Rain]              [Thunder]
-[Wind]              [Ocean Waves]       [City Ambience]
-[Forest]            [Fire Crackling]    [Crickets]
-```
-
-**Human:**
-```
-[Applause]          [Cheering]          [Clapping]
-[Whistling]         [Audience Laughing] [Crowd Chanting]
-[Screams]           [Gasps]
-```
-
-**Technical:**
-```
-[Phone Ringing]     [Beeping]           [Static]
-[Record Scratch]    [Tape Stop]         [Silence]
+Synth Bass, Acid Bass, Lead Synth
+Arpeggiator, Glitch, Sidechain
 ```
 
 ---
 
-## Lyrics Field Format
+## Genre Reference
 
-### Basic Structure
+**Electronic:** EDM, House, Techno, Trance, Dubstep, Drum and Bass, Synthwave, Chillwave, Future Bass, Trap, Ambient
+
+**Hip-Hop/R&B:** Hip Hop, Boom Bap, Lo-fi Hip Hop, Trap Rap, R&B, Neo-Soul, Funk
+
+**Rock:** Indie Rock, Alt Rock, Hard Rock, Punk, Grunge, Metal, Shoegaze, Post-Rock
+
+**Pop:** Synth Pop, Electropop, Indie Pop, Dream Pop, Bedroom Pop, Dance Pop, K-Pop
+
+**Folk/Country:** Folk, Indie Folk, Americana, Country, Bluegrass, Singer-Songwriter
+
+**Jazz/Blues:** Jazz, Smooth Jazz, Bebop, Bossa Nova, Blues, Swing
+
+**Classical:** Orchestral, Cinematic, Film Score, Chamber Music, Neoclassical
+
+---
+
+## Templates
+
+### Template A: Full Song Structure
+
 ```
+[Mood: Focused]
+[Energy: Medium]
+[Instrument: Keys, Drums]
+
 [Intro]
+(quiet movement; establish palette)
 
 [Verse 1]
-First verse lyrics here
-More lyrics on next line
+(tight lines; story lane)
+Your verse lyrics here
+Keep lines short and clear
 
 [Pre-Chorus]
-Building tension lyrics
+[Build-Up]
+(shorter phrasing; raise anticipation)
 
 [Chorus]
-Catchy hook lyrics
+[Energy: High]
+(simple hook; biggest lift)
+Your hook lyrics here
 Most memorable part
 
 [Verse 2]
+(new angle; same pocket)
 Second verse lyrics
+Advance the story
+
+[Chorus]
+[Energy: High]
+(keep hook consistent)
 
 [Bridge]
-[Emotional] [Vulnerable]
-Contrasting lyrics here
+[Breakdown]
+(space + contrast)
+Bridge lyrics here
 
 [Final Chorus]
-[Powerful] [Belting]
-Catchy hook with intensity
+[Energy: High]
+(biggest version; same hook)
 
 [Outro]
 [Fade Out]
+(leave room for fade)
 ```
 
-### Inline Voice Direction
+### Template B: EDM/Electronic (Build-Drop)
+
 ```
+[Mood: Euphoric]
+[Energy: Building]
+[Instrument: Synth, 808s, Lead]
+
+[Intro]
+[Atmospheric]
+(kick-less atmosphere + arp motif, filtered percussion)
+
+[Build]
+[Build-up dynamics]
+(risers + snare roll, add bass movement)
+
+[Drop]
+[Energy: High]
+[Zenith intensity]
+(full kick + bass, hook synth, strong groove)
+
+[Breakdown]
+(remove kick, keep pad + vocal chop motif)
+
+[Build]
+[Gradual swell]
+(tension returns, bigger risers, wider harmony)
+
+[Drop]
+[Energy: High]
+(second drop variation - new top line or bass rhythm)
+
+[Outro]
+[Fade Out]
+(simplify elements, fade with motif)
+```
+
+### Template C: Intimate Ballad
+
+```
+[Mood: Vulnerable]
+[Energy: Low]
+[Instrument: Piano, Soft Strings]
+
+[Intro]
+[Quiet arrangement]
+(space; single instrument)
+
 [Verse 1]
-[Soft] [Breathy]
-Walking through the morning light
-Shadows fading from the night
+[Soft] [Breathy] [Intimate]
+Close, personal lyrics
+Short phrases, room to breathe
 
 [Chorus]
-[Powerful] [Belting]
-We're alive, we're alive tonight!
+[Vulnerable] [Tender]
+[Ascending progression]
+Emotional hook here
+Let the melody lift gently
+
+[Verse 2]
+[Introspective moment]
+Deeper into the story
+New details, same intimacy
+
+[Bridge]
+[Whisper]
+[Emotional climax]
+The confession or realization
+
+[Final Chorus]
+[Building] [Heightened emotion]
+Same hook, more intensity
+
+[Outro]
+[Fade Out]
+[Yielding resolution]
 ```
 
-### Vocal Transitions
+### Template D: Loop for Shorts/Reels (20-35 sec)
+
 ```
-[Verse 1]
-[Male Vocal] [Smooth]
-His part of the verse here
+[Hook Loop]
+[Mood: Confident]
+[Energy: Medium→High]
+[Instrument: Bass, Drums, Simple Lead]
 
-[Verse 1 continued]
-[Female Vocal] [Airy]
-Her response lyrics here
-
-[Chorus]
-[Duet] [Harmonies]
-Together now we sing as one
+(loop-friendly; minimal variation; clean downbeat)
+Hook lyric line one
+Hook lyric line two
+(repeat hook; keep cadence identical)
 ```
 
 ---
 
-## Complete Prompt Examples
+## Advanced Techniques
 
-### Example 1: Nostalgic Synthwave Ballad
+### Technique A: Structure + Constraint
 
-**Style Prompt:**
+Add one constraint that prevents chaos:
+- "Keep verses minimal; save full instrumentation for chorus."
+- "No key change. No tempo change."
+- "Keep the hook melody consistent across all choruses."
+
+### Technique B: Build Variation Intentionally
+
+Direct variation explicitly:
+- "Verse 2 adds a counter melody."
+- "Final chorus adds harmonies and extra drums."
+- "Second drop switches bass rhythm, same hook lead."
+
+### Technique C: Prevent Section Blur
+
+Add clear boundaries:
+- "Hard stop into chorus."
+- "Drums drop for one bar before bridge."
+- "Short break before final chorus."
+
+### Technique D: Vocal Transitions
+
 ```
-1985 synthwave ballad, 98 BPM, dreamy analog synth pads,
-gated reverb snare, neon-lit atmosphere, warm male vocal
-with subtle chorus effect, nostalgic melancholic,
-lush string synths, driving arpeggios
-```
-
-**Lyrics:**
-```
-[Intro]
-[Instrumental]
-
 [Verse 1]
-[Soft] [Reverb]
-Neon signs reflect on rain-soaked streets
-Another night alone with fading beats
-The radio plays songs we used to know
-Before you had to go
+[Male Vocal] [Smooth]
+His part of the verse
 
-[Pre-Chorus]
-[Building]
-And I'm still here waiting
+[Verse 1 continued]
+[Female Vocal] [Airy]
+Her response
 
 [Chorus]
-[Powerful] [Falsetto]
-Driving through the endless night
-Chasing after fading light
-Every mile brings me closer to goodbye
-Under purple skies we fly
-
-[Verse 2]
-[Vulnerable]
-Photographs are scattered on the floor
-Memories of what we were before
-The tape deck plays our song on endless loop
-While I'm stuck inside this room
-
-[Bridge]
-[Whisper] [Intimate]
-Maybe in another life
-Maybe in another time
-
-[Final Chorus]
-[Belting] [Euphoric]
-Driving through the endless night...
-
-[Outro]
-[Fade Out]
-```
-
-### Example 2: Hard-Hitting Trap Anthem
-
-**Style Prompt:**
-```
-Modern trap, 145 BPM half-time feel, heavy 808 sub bass,
-crisp hi-hats with rolls, dark minor key, aggressive male rap,
-sparse piano stabs, distorted ad-libs, hard-hitting punchy mix
-```
-
-**Lyrics:**
-```
-[Intro]
-[808s] [Dark]
-
-[Verse 1]
-[Aggressive] [Rap]
-Coming through with the pressure, yeah
-Stack it up, getting better, yeah
-Never fold under weather, yeah
-We forever, put together, yeah
-
-[Hook]
-[AutoTune] [Melodic]
-Run it up, run it up, to the top
-Never stop, never stop, what we got
-
-[Verse 2]
-[Aggressive] [Rap]
-Started low, now we elevated
-Every move calculated
-Success anticipated
-Legacy we created
-
-[Drop]
-[High Energy]
-
-[Hook]
-[AutoTune] [Harmonies]
-Run it up, run it up, to the top...
-
-[Outro]
-[Fade Out]
-```
-
-### Example 3: Intimate Indie Folk
-
-**Style Prompt:**
-```
-2010s indie folk, 88 BPM, fingerpicked acoustic guitar,
-warm upright piano accents, soft brushed drums, intimate vulnerable
-female vocal, lo-fi tape warmth, wistful nostalgic autumn feeling,
-sparse delicate arrangement
-```
-
-**Lyrics:**
-```
-[Intro]
-[Acoustic Guitar]
-
-[Verse 1]
-[Soft] [Breathy] [Intimate]
-Cardboard boxes line the hall
-Pictures coming off the wall
-Seven years inside these rooms
-Now it's May and I leave June
-
-[Chorus]
-[Vulnerable] [Tender]
-And I don't know where I'm going
-But I know I can't stay here
-Where the ghosts of who we were
-Still whisper in my ear
-
-[Verse 2]
-[Soft]
-Coffee cups still in the sink
-Gives me too much time to think
-Your sweater's hanging by the door
-You won't be needing it anymore
-
-[Bridge]
-[Whisper]
-Maybe someday I'll come back
-When the missing doesn't hurt
-
-[Final Chorus]
-[Building] [Emotional]
-And I don't know where I'm going...
-
-[Outro]
-[Humming] [Fade Out]
-```
-
-### Example 4: Epic Orchestral Cinematic
-
-**Style Prompt:**
-```
-Epic cinematic orchestral, sweeping string section, powerful brass fanfares,
-thundering timpani and bass drums, soaring choir, triumphant heroic mood,
-building crescendos, John Williams style, major key, 120 BPM
-```
-
-**Lyrics:**
-```
-[Intro]
-[Instrumental] [Building]
-
-[Verse 1]
-[Choir] [Soft] [Mysterious]
-From the ashes we will rise
-Reaching for the distant skies
-Through the darkness, see the light
-Warriors prepare to fight
-
-[Chorus]
-[Choir] [Powerful] [Triumphant]
-Stand together, stand as one
-The battle's lost but war's not done
-With fire burning in our hearts
-A brand new day is gonna start
-
-[Instrumental Break]
-[Solo] [Brass Fanfare]
-
-[Bridge]
-[Soft] [Strings]
-Remember those who came before
-Who gave their all and gave us more
-
-[Final Chorus]
-[Explosive] [Full Orchestra]
-Stand together, stand as one!
-
-[Outro]
-[Fade Out] [Peaceful]
+[Duet] [Harmonies]
+Together now
 ```
 
 ---
@@ -540,25 +465,36 @@ Stand together, stand as one!
 | Don't | Do Instead |
 |-------|------------|
 | `happy upbeat song` | `Upbeat synth-pop, 120 BPM, major key, joyful, bright synths` |
-| `sad slow song` | `Melancholic ballad, 68 BPM, sparse piano, vulnerable female vocal, intimate` |
-| `like Coldplay` | `2000s alt-rock, atmospheric, falsetto male vocal, piano-driven, anthemic chorus` |
+| `sad slow song` | `Melancholic ballad, 68 BPM, sparse piano, vulnerable female vocal` |
+| `like Coldplay` | `2000s alt-rock, atmospheric, falsetto male vocal, piano-driven, anthemic` |
+| `[Mood: sad, happy, angry]` | Pick ONE mood per tag |
 | `[Fast] [Slow]` | Pick one tempo/energy |
 | `[Heavy Metal] [Smooth Jazz]` | Commit to a coherent genre |
 | 10+ instrument tags | Limit to 2-4 key instruments |
-| Empty structure tags | Add lyrics or `[Instrumental]` under each tag |
+| Empty structure tags | Add lyrics or `[Instrumental]` under each |
+| Vague words ("cool", "fire") | Specific descriptors with clear meaning |
+| Lyrics in Style field | Lyrics belong in Lyrics field only |
 
 ---
 
-## Quick Reference Card
+## Quick Reference
 
-### Style Prompt Template
+### Style Prompt Formula
 ```
-[Decade] [Genre], [BPM], [2-4 Instruments], [Mood], [Texture], [Vocal Style]
+[Era] [Genre], [BPM], [2-4 Instruments], [Mood], [Texture], [Vocal Style]
 ```
 
-### Essential Structure Flow
+### Lyrics Field Formula
 ```
-[Intro] → [Verse 1] → [Pre-Chorus] → [Chorus] →
+[Palette tags at top]
+[Section Tag]
+[Inline voice/energy cues]
+Actual lyrics here
+```
+
+### Essential Flow
+```
+[Intro] → [Verse] → [Pre-Chorus] → [Chorus] →
 [Verse 2] → [Chorus] → [Bridge] → [Final Chorus] → [Outro]
 ```
 
@@ -569,11 +505,12 @@ Example: [Female Vocal] [Breathy] [Vulnerable]
 ```
 
 ### Iteration Strategy
-1. Start broad, get the genre/feel right
+1. Start broad, get genre/feel right
 2. Refine instruments and texture
 3. Adjust vocal style and emotion
 4. Fine-tune structure and dynamics
-5. Generate 6+ versions, cherry-pick best sections
+5. Generate 6+ versions
+6. Use Replace to fix single sections rather than regenerating everything
 
 ---
 
@@ -582,5 +519,5 @@ Example: [Female Vocal] [Breathy] [Vulnerable]
 - [Suno Wiki - List of Metatags](https://sunoaiwiki.com/resources/2024-05-13-list-of-metatags/)
 - [Musci.io - Suno Tags Complete Guide](https://musci.io/blog/suno-tags)
 - [How To Prompt Suno - Voice Tags Guide](https://howtopromptsuno.com/making-music/voice-tags)
+- [Jack Righteous - Meta Tags & Structure Command Guide](https://jackrighteous.com/en-us/pages/suno-ai-meta-tags-guide)
 - [Travis Nicholson - How To Write Suno AI Prompts](https://travisnicholson.medium.com/how-to-write-suno-ai-prompts-with-examples-46700d2c3003)
-- [LitMedia - Suno Prompts Guide](https://www.litmedia.ai/resource-music-tips/suno-prompts/)
