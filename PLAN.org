@@ -115,7 +115,8 @@ form in step 3.
 The protocol is in force from 2026-11-27. The four commits before it
 are not back-filled.
 
-** DOING Generate the Paradise Lost songs on Suno
+** DONE Generate the Paradise Lost songs on Suno :pending_commit:
+CLOSED: [2026-11-27 Fri 01:05]
 :PROPERTIES:
 :CUSTOM_ID: suno-paradise-lost-generation
 :END:
@@ -126,10 +127,12 @@ title sent from this machine ends in =#ClaudeCode-Macbook-Songs=. The
 first nine prompts (Better to Reign in Hell through With Thee
 Conversing, Irish trad) went out before that rule and carry plain
 titles; the remaining nine carry the suffix.
+- Result :: 36 clips (18 prompts, two clips each), all complete on model v6,
+  3 to 7 minutes long, all in the playlist. Credits used: 18 generations.
 - Commit :: pending
 - Resolved in :: [[https://suno.com/playlist/29e7d31a-9b0c-4b5c-b7db-ad2723f0e0ea][Suno playlist "Paradise Lost"]] (no repo files change)
 
-** DONE Record the Suno generation conventions in CLAUDE.md :pending_commit:
+** DONE Record the Suno generation conventions in CLAUDE.md
 CLOSED: [2026-11-27 Fri 00:59]
 :PROPERTIES:
 :CUSTOM_ID: claude-md-suno-conventions
@@ -137,10 +140,10 @@ CLOSED: [2026-11-27 Fri 00:59]
 The Suno MCP connector is how songs are generated from this repo, and
 every title it sends must end in =#ClaudeCode-Macbook-Songs=. Stated in
 CLAUDE.md so future sessions do it without being told.
-- Commit :: pending
-- Resolved in :: [[https://github.com/Conaws/songs/blob/main/CLAUDE.md#suno-generation][CLAUDE.md, section "Suno Generation"]]
+- Commit :: [[https://github.com/Conaws/songs/commit/2b17463c51cff8cce6424a4a8a8c9770b20011e8][2b17463 Add Paradise Lost prompts, planning ledger and Suno conventions]]
+- Resolved in :: [[https://github.com/Conaws/songs/blob/2b17463c51cff8cce6424a4a8a8c9770b20011e8/CLAUDE.md#suno-generation][CLAUDE.md, section "Suno Generation"]]
 
-** DONE Document the planning protocol in CLAUDE.md and AGENTS.md :pending_commit:
+** DONE Document the planning protocol in CLAUDE.md and AGENTS.md
 CLOSED: [2026-11-27 Fri 00:12]
 :PROPERTIES:
 :CUSTOM_ID: agent-docs-planning-protocol
@@ -149,13 +152,13 @@ Claude Code reads CLAUDE.md and Codex reads AGENTS.md at the start of
 every session, so the rule has to be stated there or it will not be
 followed. The same edit lists =Milton/= and =PLAN.org= in each file's
 repository map.
-- Commit :: pending
-- Resolved in :: [[https://github.com/Conaws/songs/blob/main/CLAUDE.md#planning-protocol][CLAUDE.md, section "Planning Protocol"]]
-- Resolved in :: [[https://github.com/Conaws/songs/blob/main/CLAUDE.md#repository-structure][CLAUDE.md, section "Repository Structure"]]
-- Resolved in :: [[https://github.com/Conaws/songs/blob/main/AGENTS.md#planning-protocol][AGENTS.md, section "Planning Protocol"]]
-- Resolved in :: [[https://github.com/Conaws/songs/blob/main/AGENTS.md#repository-structure][AGENTS.md, section "Repository Structure"]]
+- Commit :: [[https://github.com/Conaws/songs/commit/2b17463c51cff8cce6424a4a8a8c9770b20011e8][2b17463 Add Paradise Lost prompts, planning ledger and Suno conventions]]
+- Resolved in :: [[https://github.com/Conaws/songs/blob/2b17463c51cff8cce6424a4a8a8c9770b20011e8/CLAUDE.md#planning-protocol][CLAUDE.md, section "Planning Protocol"]]
+- Resolved in :: [[https://github.com/Conaws/songs/blob/2b17463c51cff8cce6424a4a8a8c9770b20011e8/CLAUDE.md#repository-structure][CLAUDE.md, section "Repository Structure"]]
+- Resolved in :: [[https://github.com/Conaws/songs/blob/2b17463c51cff8cce6424a4a8a8c9770b20011e8/AGENTS.md#planning-protocol][AGENTS.md, section "Planning Protocol"]]
+- Resolved in :: [[https://github.com/Conaws/songs/blob/2b17463c51cff8cce6424a4a8a8c9770b20011e8/AGENTS.md#repository-structure][AGENTS.md, section "Repository Structure"]]
 
-** DONE Create this planning ledger :pending_commit:
+** DONE Create this planning ledger
 CLOSED: [2026-11-27 Fri 00:12]
 :PROPERTIES:
 :CUSTOM_ID: create-plan-org
@@ -163,10 +166,10 @@ CLOSED: [2026-11-27 Fri 00:12]
 An Org file in which every change is a TODO before it is made and,
 once it lands, a DONE carrying permalinks to the commit and to the
 file, section or function that resolves it.
-- Commit :: pending
-- Resolved in :: [[https://github.com/Conaws/songs/blob/main/PLAN.org][PLAN.org]] (whole file)
+- Commit :: [[https://github.com/Conaws/songs/commit/2b17463c51cff8cce6424a4a8a8c9770b20011e8][2b17463 Add Paradise Lost prompts, planning ledger and Suno conventions]]
+- Resolved in :: [[https://github.com/Conaws/songs/blob/2b17463c51cff8cce6424a4a8a8c9770b20011e8/PLAN.org][PLAN.org]] (whole file)
 
-** DONE Add the Paradise Lost Suno prompts under Milton/ :pending_commit:
+** DONE Add the Paradise Lost Suno prompts under Milton/
 CLOSED: [2026-11-26 Thu 23:58]
 :PROPERTIES:
 :CUSTOM_ID: milton-paradise-lost-prompts
@@ -175,5 +178,5 @@ Bring the Paradise Lost prompt set (nine passages, two style
 variations each) into the repo as a new top-level folder beside
 =Oisin/= and =Yeats/=, copied unchanged from the iCloud original.
 Added before this ledger existed; the entry was written afterwards.
-- Commit :: pending
-- Resolved in :: [[https://github.com/Conaws/songs/blob/main/Milton/paradise-lost-suno-prompts.md][Milton/paradise-lost-suno-prompts.md]] (whole file)
+- Commit :: [[https://github.com/Conaws/songs/commit/2b17463c51cff8cce6424a4a8a8c9770b20011e8][2b17463 Add Paradise Lost prompts, planning ledger and Suno conventions]]
+- Resolved in :: [[https://github.com/Conaws/songs/blob/2b17463c51cff8cce6424a4a8a8c9770b20011e8/Milton/paradise-lost-suno-prompts.md][Milton/paradise-lost-suno-prompts.md]] (whole file)
