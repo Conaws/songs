@@ -115,7 +115,7 @@ form in step 3.
 The protocol is in force from 2026-11-27. The four commits before it
 are not back-filled.
 
-** DONE Generate the Paradise Lost songs on Suno :pending_commit:
+** DONE Generate the Paradise Lost songs on Suno
 CLOSED: [2026-11-27 Fri 01:05]
 :PROPERTIES:
 :CUSTOM_ID: suno-paradise-lost-generation
@@ -129,7 +129,7 @@ Conversing, Irish trad) went out before that rule and carry plain
 titles; the remaining nine carry the suffix.
 - Result :: 36 clips (18 prompts, two clips each), all complete on model v6,
   3 to 7 minutes long, all in the playlist. Credits used: 18 generations.
-- Commit :: pending
+- Commit :: [[https://github.com/Conaws/songs/commit/e28f9c4449ff6c601c3b79118734cbf36dc73b44][e28f9c4 Record the Paradise Lost Suno generation in the ledger]]
 - Resolved in :: [[https://suno.com/playlist/29e7d31a-9b0c-4b5c-b7db-ad2723f0e0ea][Suno playlist "Paradise Lost"]] (no repo files change)
 
 ** DONE Record the Suno generation conventions in CLAUDE.md
