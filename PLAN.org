@@ -1,0 +1,179 @@
+:PROPERTIES:
+:ID:       657e574c-d145-4173-83f2-4c48f090b630
+:END:
+#+title: Songs planning ledger
+#+filetags: :planning:
+#+TODO: TODO DOING | DONE CANCELLED
+
+Every change to this repository is written down here as a goal before
+it is made, and linked to its commit and its resolving location after
+it lands. The file is plain Org text: GitHub renders it, and any
+editor can maintain it.
+
+* Conventions
+** The rule
+1. *Before* writing, adding or changing any file, add a =TODO= entry at
+   the top of [[#tasks][Tasks]] stating the goal.
+2. Do the work. Then mark the entry =DONE=, add a =CLOSED= timestamp,
+   and tag it =pending_commit=. Point each =Resolved in= line at the
+   file, section or function that resolves the goal, using the
+   provisional link form (=main= in place of a SHA), and leave
+   =Commit :: pending=.
+3. Commit. Immediately afterwards run ~git log -1 --format='%H %s'~,
+   replace =pending= with a link to that commit, replace =main= in each
+   =Resolved in= link with that SHA, and remove the =pending_commit=
+   tag. This bookkeeping edit rides in the next commit, whatever that
+   commit is for. It never gets an entry of its own, and it is never
+   done with ~git commit --amend~, which would change the SHA just
+   recorded.
+
+The tag marks the waiting state because it sits on the headline where
+it cannot be missed, and ~grep -n pending_commit PLAN.org~ lists
+everything still waiting on git. The =DONE= state stays truthful (the
+work is done); the tag records only that the ledger is waiting.
+
+** Entry template
+Written when the goal is set:
+#+begin_example
+  ** TODO <Goal, as one imperative sentence>
+  :PROPERTIES:
+  :CUSTOM_ID: <short-kebab-slug>
+  :END:
+  <One or two lines on what and why.>
+  - Commit :: pending
+  - Resolved in :: [[https://github.com/Conaws/songs/blob/main/<path>][<path>]] (whole file)
+#+end_example
+
+Done, waiting for the commit (the CLOSED timestamp is written by hand):
+#+begin_example
+  ** DONE <Goal>                                            :pending_commit:
+  CLOSED: [2026-11-27 Fri 00:12]
+  :PROPERTIES:
+  :CUSTOM_ID: <short-kebab-slug>
+  :END:
+  <What and why.>
+  - Commit :: pending
+  - Resolved in :: [[https://github.com/Conaws/songs/blob/main/Milton/foo.md#some-section][Milton/foo.md, section "Some Section"]]
+#+end_example
+
+After the commit lands:
+#+begin_example
+  ** DONE <Goal>
+  CLOSED: [2026-11-27 Fri 00:12]
+  :PROPERTIES:
+  :CUSTOM_ID: <short-kebab-slug>
+  :END:
+  <What and why.>
+  - Commit :: [[https://github.com/Conaws/songs/commit/<sha>][<sha7> <subject>]]
+  - Resolved in :: [[https://github.com/Conaws/songs/blob/<sha>/Milton/foo.md#some-section][Milton/foo.md, section "Some Section"]]
+#+end_example
+
+** Link forms
+Permalinks use the full 40-character SHA, so they never move. Before
+the commit exists, write the same link with ~main~ in place of the SHA;
+it resolves as soon as the push lands and is swapped for the pinned
+form in step 3.
+
+| What the entry resolves            | Permalink                                                               |
+|------------------------------------+-------------------------------------------------------------------------|
+| The commit                         | ~https://github.com/Conaws/songs/commit/<sha>~                           |
+| A whole file (new or rewritten)    | ~https://github.com/Conaws/songs/blob/<sha>/<path>~                      |
+| A function or block in a code file | ~https://github.com/Conaws/songs/blob/<sha>/<path>#L<from>-L<to>~        |
+| A section of a Markdown file       | ~https://github.com/Conaws/songs/blob/<sha>/<path>#<heading-slug>~       |
+| Exact lines of a Markdown/Org file | ~https://github.com/Conaws/songs/blob/<sha>/<path>?plain=1#L<from>-L<to>~ |
+
+- GitHub has no anchor for a function by name. A line range at a fixed
+  SHA is permanent, so link the full span of the definition.
+- Heading slugs follow GitHub: lower-case, spaces become hyphens,
+  other punctuation is dropped. ~# Better to Reign in Hell (Book 1, lines 242-270)~
+  becomes ~#better-to-reign-in-hell-book-1-lines-242-270~.
+- On any GitHub file page, pressing =y= rewrites the URL into a
+  SHA-pinned permalink; select lines first to get the ~#L~ range.
+
+** Rules
+- One entry per goal. Several goals landing in one commit each get
+  their own entry, all pointing at the same commit.
+- A goal that lands over several commits gets one =Commit= line per
+  commit and keeps the tag until the last one is recorded.
+- Abandoned goals become =CANCELLED= with a one-line reason and no
+  links.
+- Commit messages name the entries they complete, one
+  ~Plan: <slug>~ line each in the body, so a commit leads back to its
+  goal.
+- Never rewrite history the ledger points at. If it happens anyway
+  (rebase, squash), update every SHA that changed.
+- New entries go at the top of Tasks, so open work is seen first.
+- Only this file's own bookkeeping (filling in SHAs, removing the tag)
+  is exempt from needing an entry. Everything else needs one,
+  including edits to CLAUDE.md, AGENTS.md and this Conventions
+  section.
+
+* Tasks
+:PROPERTIES:
+:CUSTOM_ID: tasks
+:END:
+The protocol is in force from 2026-11-27. The four commits before it
+are not back-filled.
+
+** DOING Generate the Paradise Lost songs on Suno
+:PROPERTIES:
+:CUSTOM_ID: suno-paradise-lost-generation
+:END:
+Run all 18 prompts in =Milton/paradise-lost-suno-prompts.md= through
+the Suno MCP connector (custom mode: style field, lyrics field, title),
+two clips per prompt, into the private playlist "Paradise Lost". Every
+title sent from this machine ends in =#ClaudeCode-Macbook-Songs=. The
+first nine prompts (Better to Reign in Hell through With Thee
+Conversing, Irish trad) went out before that rule and carry plain
+titles; the remaining nine carry the suffix.
+- Commit :: pending
+- Resolved in :: [[https://suno.com/playlist/29e7d31a-9b0c-4b5c-b7db-ad2723f0e0ea][Suno playlist "Paradise Lost"]] (no repo files change)
+
+** DONE Record the Suno generation conventions in CLAUDE.md :pending_commit:
+CLOSED: [2026-11-27 Fri 00:59]
+:PROPERTIES:
+:CUSTOM_ID: claude-md-suno-conventions
+:END:
+The Suno MCP connector is how songs are generated from this repo, and
+every title it sends must end in =#ClaudeCode-Macbook-Songs=. Stated in
+CLAUDE.md so future sessions do it without being told.
+- Commit :: pending
+- Resolved in :: [[https://github.com/Conaws/songs/blob/main/CLAUDE.md#suno-generation][CLAUDE.md, section "Suno Generation"]]
+
+** DONE Document the planning protocol in CLAUDE.md and AGENTS.md :pending_commit:
+CLOSED: [2026-11-27 Fri 00:12]
+:PROPERTIES:
+:CUSTOM_ID: agent-docs-planning-protocol
+:END:
+Claude Code reads CLAUDE.md and Codex reads AGENTS.md at the start of
+every session, so the rule has to be stated there or it will not be
+followed. The same edit lists =Milton/= and =PLAN.org= in each file's
+repository map.
+- Commit :: pending
+- Resolved in :: [[https://github.com/Conaws/songs/blob/main/CLAUDE.md#planning-protocol][CLAUDE.md, section "Planning Protocol"]]
+- Resolved in :: [[https://github.com/Conaws/songs/blob/main/CLAUDE.md#repository-structure][CLAUDE.md, section "Repository Structure"]]
+- Resolved in :: [[https://github.com/Conaws/songs/blob/main/AGENTS.md#planning-protocol][AGENTS.md, section "Planning Protocol"]]
+- Resolved in :: [[https://github.com/Conaws/songs/blob/main/AGENTS.md#repository-structure][AGENTS.md, section "Repository Structure"]]
+
+** DONE Create this planning ledger :pending_commit:
+CLOSED: [2026-11-27 Fri 00:12]
+:PROPERTIES:
+:CUSTOM_ID: create-plan-org
+:END:
+An Org file in which every change is a TODO before it is made and,
+once it lands, a DONE carrying permalinks to the commit and to the
+file, section or function that resolves it.
+- Commit :: pending
+- Resolved in :: [[https://github.com/Conaws/songs/blob/main/PLAN.org][PLAN.org]] (whole file)
+
+** DONE Add the Paradise Lost Suno prompts under Milton/ :pending_commit:
+CLOSED: [2026-11-26 Thu 23:58]
+:PROPERTIES:
+:CUSTOM_ID: milton-paradise-lost-prompts
+:END:
+Bring the Paradise Lost prompt set (nine passages, two style
+variations each) into the repo as a new top-level folder beside
+=Oisin/= and =Yeats/=, copied unchanged from the iCloud original.
+Added before this ledger existed; the entry was written afterwards.
+- Commit :: pending
+- Resolved in :: [[https://github.com/Conaws/songs/blob/main/Milton/paradise-lost-suno-prompts.md][Milton/paradise-lost-suno-prompts.md]] (whole file)
